@@ -56,13 +56,13 @@ using android::Mutex;
 #define EQ_MAX_BAND_NUM 12
 
 #define ADRC_ENABLE  0x0001
-#define ADRC_DISABLE 0x0000
+#define ADRC_DISABLE 0xFFFE
 #define EQ_ENABLE    0x0002
-#define EQ_DISABLE   0x0000
+#define EQ_DISABLE   0xFFFD
 #define RX_IIR_ENABLE  0x0004
-#define RX_IIR_DISABLE 0x0000
+#define RX_IIR_DISABLE 0xFFFB
 #define MBADRC_ENABLE  0x0010
-#define MBADRC_DISABLE 0x0000
+#define MBADRC_DISABLE 0xFFEF
 
 #define AGC_ENABLE     0x0001
 #define NS_ENABLE      0x0002
@@ -176,7 +176,7 @@ public:
 
     virtual status_t    setVoiceVolume(float volume);
     virtual status_t    setMasterVolume(float volume);
-#ifdef FM_RADIO
+#ifdef HAVE_FM_RADIO
     virtual status_t    setFmVolume(float volume);
 #endif
     virtual status_t    setMode(int mode);
@@ -191,6 +191,7 @@ public:
     // create I/O streams
     virtual AudioStreamOut* openOutputStream(
                                 uint32_t devices,
+                                audio_output_flags_t flags,
                                 int *format=0,
                                 uint32_t *channels=0,
                                 uint32_t *sampleRate=0,
@@ -223,7 +224,7 @@ private:
     uint32_t    getInputSampleRate(uint32_t sampleRate);
     bool        checkOutputStandby();
     status_t    doRouting(AudioStreamInMSM72xx *input);
-#ifdef FM_RADIO
+#ifdef HAVE_FM_RADIO
     status_t    setFmOnOff(bool onoff);
 #endif
     AudioStreamInMSM72xx*   getActiveInput_l();
@@ -323,7 +324,7 @@ private:
             bool mDualMicEnabled;
             int  mTtyMode;
             bool mBuiltinMicSelected;
-#ifdef FM_RADIO
+#ifdef HAVE_FM_RADIO
             int mFmRadioEnabled;
             int mFmPrev;
 #endif
