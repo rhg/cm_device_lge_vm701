@@ -51,7 +51,6 @@ lib/libaudioeq.so
 
 ## CAMERA
 lib/liboemcamera.so
-lib/libcamera.so
 lib/libmmjpeg.so
 lib/libmmipl.so
 
